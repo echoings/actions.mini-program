@@ -1,0 +1,8 @@
+name: "actions.mini-program"
+description: "integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier"
+branding:
+  icon: box
+  color: green
+runs:
+  using: "node12"
+  main: "./dist/min/index.js"
