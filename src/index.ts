@@ -12,7 +12,7 @@ async function run(): Promise<void> {
 
     const { MINI_APP_ID, MINI_APP_PRIVATE_KEY, GITHUB_WORKSPACE: sourceDir = '' } = process.env;
 
-    console.log(commandOptions);
+    console.log(commandOptions.split('='));
 
     const timestamp = new Date().getTime();
     const previewPicDir = path.join(sourceDir, `${timestamp}/preview.jpg`);
@@ -20,6 +20,7 @@ async function run(): Promise<void> {
 
     const privateKeyDir = `./private.mini.key`;
 
+    await fs.ensureFile(previewPicDir);
     await fs.outputFile(privateKeyDir, MINI_APP_PRIVATE_KEY);
     await exec.exec('npx', [
       'miniprogram-ci',
