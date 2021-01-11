@@ -20,8 +20,19 @@ async function run(): Promise<void> {
     const privateKeyDir = `./private.${timestamp}.key`;
     await fs.outputFile(privateKeyDir, MINI_APP_PRIVATE_KEY);
     
-    const commandOptions = options.replace(/\n/, '').split('=');
-    console.log(eval(options), commandOptions);
+    
+    let commandOptions = options.split('\n');
+
+    commandOptions.map(v => {
+      const map = v.split('=');
+      if(map[1]) {
+        return `${map[0]}, ${map[1]}`;
+      }
+
+      return `${map[0]}, 'true'`;
+    });
+
+    console.log(commandOptions);
     const robot = 3;
     const project = new ci({
       sourceDir,
