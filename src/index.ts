@@ -42,7 +42,7 @@ async function run(): Promise<void> {
       ]
     })
 
-    const handle  = actionType.replace(/\-/, '_') as 'cloud' | 'get_dev_source_map' | 'pack_npm' | 'preview' | 'upload' | 'pack_npm_manually';
+    const handle: 'cloud' | 'get_dev_source_map' | 'pack_npm' | 'preview' | 'upload' | 'pack_npm_manually' = actionType.replace(/\-/, '_') as any;
 
     await project[handle]();
 
