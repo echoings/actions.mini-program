@@ -30,7 +30,6 @@ async function run(): Promise<void> {
       return `${map[0]}, 'true'`;
     });
 
-    console.log(commandOptions);
     const existsRobotConfig = await fs.pathExists(path.join(sourceDir, 'mini.program.robot.config.js'))
     
     let robotConfig: any= {};
@@ -45,7 +44,6 @@ async function run(): Promise<void> {
     const robot = robotConfig[branch] || robotConfig[author] || 28;
     const commits = github.context.payload.commits || [{message: `robot ${robot} trigger this pub`}];
 
-    console.log('rrrrr ', author, branch, robot);
     const project = new ci({
       sourceDir,
       projectType,
@@ -60,7 +58,7 @@ async function run(): Promise<void> {
         '--pkp', `${privateKeyDir}`,
         '--appid', `${MINI_APP_ID}`,
         '--uv', `${version}`,
-        '--ud', `${commits[0].message}`,
+        '--ud', `'${commits[0].message}'`,
         '-r', `${robot}`,
         ...commandOptions,
       ]

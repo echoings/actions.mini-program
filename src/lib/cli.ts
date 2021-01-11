@@ -29,11 +29,8 @@ export default class Cli{
 
   // upload
   async upload() {
-    const { baseArgs, sourceDir } = this.options;
-    const timestamp = new Date().getTime();
-    const preview_pic_dir = path.join(sourceDir, `${timestamp}/preview.jpg`);    
+    const { baseArgs } = this.options;
 
-    await fs.ensureFile(preview_pic_dir);
     await exec.exec('npx', [
       ...baseArgs,
     ]);
