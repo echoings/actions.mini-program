@@ -28,7 +28,7 @@ inputs:
     required: false
     default:
       --enable-es6
-      ignores=['node_modules/**/*']
+      --project-ignores=['node_modules/**/*']
 outputs:
   preview_pic_dir: # id of output
     description: 'the preview qrcode dir'

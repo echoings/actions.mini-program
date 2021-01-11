@@ -24,10 +24,10 @@ async function run(): Promise<void> {
     const commandOptions = options.replace('\n', '').split(' ').map(v => {
       const map = v.split('=');
       if(map[1]) {
-        return `${map[0]}, ${map[1]}`;
+        return `${map[0]} ${map[1]}`;
       }
 
-      return `${map[0]}, 'true'`;
+      return `${map[0]} 'true'`;
     });
 
     const existsRobotConfig = await fs.pathExists(path.join(sourceDir, 'mini.program.robot.config.js'))
