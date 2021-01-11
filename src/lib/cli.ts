@@ -34,6 +34,8 @@ export default class Cli{
     await exec.exec('npx', [
       ...baseArgs,
     ]);
+
+    core.setOutput('preview_pic_dir', '');
   }
 
   // cloud

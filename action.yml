@@ -26,7 +26,7 @@ inputs:
   command_options:
     description: compile options # https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html
     required: false
-    default: |
+    default:
       --enable-es6
       ignores=['node_modules/**/*']
 outputs:
