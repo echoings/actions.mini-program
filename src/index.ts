@@ -21,7 +21,7 @@ async function run(): Promise<void> {
     const privateKeyDir = `./private.${timestamp}.key`;
     await fs.outputFile(privateKeyDir, MINI_APP_PRIVATE_KEY);
 
-    const commandOptions = options.split('\n').map(v => {
+    const commandOptions = options.replace('\n', '').split(' ').map(v => {
       const map = v.split('=');
       if(map[1]) {
         return `${map[0]}, ${map[1]}`;
