@@ -9,7 +9,7 @@ inputs:
     required: true
     default: 'miniProgram'
   action_type:
-    description: upload action type 
+    description: upload action type  (preview/upload/pack-npm/pack-npm-manually/cloud/)
     required: false
     default: preview
   project_path: 
@@ -19,17 +19,16 @@ inputs:
   version:
     description: pub version
     required: false
-    default: 1.0.0
-  ignores:
-    description: ignore pub folder
-    required: false
-    default: dd/dd
+    default: 0.0.1
+  # ignores:
+  #   description: ignore folder
+  #   required: false
   command_options:
     description: compile options # https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html
     required: false
     default: |
-      --project-type=miniProgram
-      --upload-description=demo
+      --enable-es6
+      ignores=['node_modules/**/*']
 outputs:
   preview_pic_dir: # id of output
     description: 'the preview qrcode dir'

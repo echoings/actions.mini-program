@@ -1,8 +1,9 @@
 import path from 'path';
 import * as core from '@actions/core';
-// import * as github from '@actions/github';
+import * as github from '@actions/github';
 import fs from 'fs-extra';
 import ci from './lib/cli';
+import config from './config';
 
 async function run(): Promise<void> {
   try {
@@ -10,7 +11,7 @@ async function run(): Promise<void> {
     const actionType = core.getInput('action_type');
     const projectPath = core.getInput('project_path');
     const version = core.getInput('version');
-    const ignores = core.getInput('ignores');
+    // const ignores = core.getInput('ignores');
     const options = core.getInput('command_options') || '';
 
     const { MINI_APP_ID, MINI_APP_PRIVATE_KEY, GITHUB_WORKSPACE: sourceDir = '' } = process.env;
@@ -19,11 +20,8 @@ async function run(): Promise<void> {
     const timestamp = new Date().getTime();
     const privateKeyDir = `./private.${timestamp}.key`;
     await fs.outputFile(privateKeyDir, MINI_APP_PRIVATE_KEY);
-    
-    
-    let commandOptions = options.split('\n');
 
-    commandOptions.map(v => {
+    const commandOptions = options.split('\n').map(v => {
       const map = v.split('=');
       if(map[1]) {
         return `${map[0]}, ${map[1]}`;
@@ -33,14 +31,27 @@ async function run(): Promise<void> {
     });
 
     console.log(commandOptions);
-    const robot = 3;
+    const existsRobotConfig = await fs.pathExists(path.join(sourceDir, 'mini.program.robot.config.js'))
+    
+    let robotConfig: any= {};
+    if(existsRobotConfig) {
+      robotConfig = require(path.join(sourceDir, 'mini-program-robot.js'));
+    } else {
+      robotConfig = config;
+    }
+
+    const author = github.context.actor;
+    const branch = github.context.ref.replace(/refs\/heads\//, '');
+    const robot = robotConfig[branch] || robotConfig[author] || 28;
+    const commits = github.context.payload.commits || [{message: `robot ${robot} trigger this pub`}];
+
+    console.log('rrrrr ', author, branch, robot);
     const project = new ci({
       sourceDir,
       projectType,
       version,
-      commandOptions,
       uploadDir,
-      ignores,
+      // ignores,
       baseArgs: [
         'miniprogram-ci',
         `${actionType}`,
@@ -49,7 +60,9 @@ async function run(): Promise<void> {
         '--pkp', `${privateKeyDir}`,
         '--appid', `${MINI_APP_ID}`,
         '--uv', `${version}`,
+        '--ud', `${commits[0].message}`,
         '-r', `${robot}`,
+        ...commandOptions,
       ]
     })
 

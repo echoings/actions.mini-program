@@ -18,8 +18,6 @@ export default class Cli{
     await fs.ensureFile(preview_pic_dir);
     await exec.exec('npx', [
       ...baseArgs,
-      '--enable-es6',
-      'true',
       '--qrcode-format',
       'image',
       '--qrcode-output-dest',
@@ -38,8 +36,6 @@ export default class Cli{
     await fs.ensureFile(preview_pic_dir);
     await exec.exec('npx', [
       ...baseArgs,
-      '--enable-es6',
-      'true'
     ]);
   }
 
