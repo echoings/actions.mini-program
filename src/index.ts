@@ -1,50 +1,51 @@
 import path from 'path';
 import * as core from '@actions/core';
 // import * as github from '@actions/github';
-import * as exec from '@actions/exec';
 import fs from 'fs-extra';
+import ci from './lib/cli';
 
 async function run(): Promise<void> {
   try {
     const projectType = core.getInput('project_type');
+    const actionType = core.getInput('action_type');
     const projectPath = core.getInput('project_path');
-    const commandOptions = core.getInput('command_options');
+    const version = core.getInput('version');
+    const ignores = core.getInput('ignores');
+    const options = core.getInput('command_options') || '';
 
     const { MINI_APP_ID, MINI_APP_PRIVATE_KEY, GITHUB_WORKSPACE: sourceDir = '' } = process.env;
-
-    console.log(commandOptions.split('='));
-
-    const timestamp = new Date().getTime();
-    const previewPicDir = path.join(sourceDir, `${timestamp}/preview.jpg`);
     const uploadDir = path.join(sourceDir, projectPath);
-
-    const privateKeyDir = `./private.mini.key`;
-
-    await fs.ensureFile(previewPicDir);
+    
+    const timestamp = new Date().getTime();
+    const privateKeyDir = `./private.${timestamp}.key`;
     await fs.outputFile(privateKeyDir, MINI_APP_PRIVATE_KEY);
-    await exec.exec('npx', [
-      'miniprogram-ci',
-      'preview',
-      '--project-type', `${projectType}`,
-      '--pp',
-      `${uploadDir}`,
-      '--pkp',
-      `${privateKeyDir}`,
-      `--appid`,
-      `${MINI_APP_ID}`,
-      '--uv',
-      '0.0.2',
-      '-r',
-      '3',
-      '--enable-es6',
-      'true',
-      '--qrcode-format',
-      'image',
-      '--qrcode-output-dest',
-      `${previewPicDir}`,
-    ]);
+    
+    const commandOptions = options.replace(/\n/, '').split('=');
+    console.log(eval(options), commandOptions);
+    const robot = 3;
+    const project = new ci({
+      sourceDir,
+      projectType,
+      version,
+      commandOptions,
+      uploadDir,
+      ignores,
+      baseArgs: [
+        'miniprogram-ci',
+        `${actionType}`,
+        '--project-type', `${projectType}`,
+        '--pp', `${uploadDir}`,
+        '--pkp', `${privateKeyDir}`,
+        '--appid', `${MINI_APP_ID}`,
+        '--uv', `${version}`,
+        '-r', `${robot}`,
+      ]
+    })
 
-    core.setOutput('previewPicDir', previewPicDir);
+    const handle  = actionType.replace(/\-/, '_') as 'cloud' | 'get_dev_source_map' | 'pack_npm' | 'preview' | 'upload' | 'pack_npm_manually';
+
+    await project[handle]();
+
     console.log('upload success');
   } catch (error) {
     core.setFailed(error);

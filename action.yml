@@ -8,10 +8,22 @@ inputs:
     description: project type (miniProgram/miniProgramPlugin/miniGame/miniGamePlugin)
     required: true
     default: 'miniProgram'
+  action_type:
+    description: upload action type 
+    required: false
+    default: preview
   project_path: 
     description: where the file project.config.json at
     required: false
     default: '' # root dir
+  version:
+    description: pub version
+    required: false
+    default: 1.0.0
+  ignores:
+    description: ignore pub folder
+    required: false
+    default: dd/dd
   command_options:
     description: compile options # https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html
     required: false
@@ -19,8 +31,10 @@ inputs:
       --project-type=miniProgram
       --upload-description=demo
 outputs:
-  previewPicDir: # id of output
+  preview_pic_dir: # id of output
     description: 'the preview qrcode dir'
+  source_map_save_path:
+    description: source-map-save-path
 runs:
   using: "node12"
   main: "./dist/min/index.js"
