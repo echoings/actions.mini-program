@@ -3,6 +3,24 @@ description: "integration Mini Program [dev, pub, preview...] with github action
 branding:
   icon: box
   color: green
+inputs:
+  project_type: 
+    description: project type (miniProgram/miniProgramPlugin/miniGame/miniGamePlugin)
+    required: true
+    default: 'miniProgram'
+  project_path: 
+    description: where the file project.config.json at
+    required: false
+    default: '' # root dir
+  command_options:
+    description: compile options # https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html
+    required: false
+    default: |
+      --project-type=miniProgram
+      --upload-description=demo
+outputs:
+  previewPicDir: # id of output
+    description: 'the preview qrcode dir'
 runs:
   using: "node12"
   main: "./dist/min/index.js"
