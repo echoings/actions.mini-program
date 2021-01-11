@@ -1,7 +1,7 @@
 import path from 'path';
 import * as core from '@actions/core';
 // import * as github from '@actions/github';
-import exec from '@actions/exec';
+import * as exec from '@actions/exec';
 import fs from 'fs-extra';
 
 async function run(): Promise<void> {
