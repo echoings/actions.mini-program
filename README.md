@@ -1,6 +1,8 @@
 # actions.mini-program
 
-A [GitHub Action](https://github.com/features/actions) to integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier
+将[miniprogram-ci](https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html)集成进Github Action，不做特殊封装，参数透传。维持和官方功能一致。只简化操作流程，通过Github Action实现自动化。可配合[actions.notify](https://github.com/echoings/actions.notify)将返回的预览二维码或结果通知给 **飞书，Slack，Telegram** 等IM。
+
+A [GitHub Action](https://github.com/features/actions) to integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier, use with [actions.notify](https://github.com/echoings/actions.notify) to notify result to IM is recommended.
 
 ## Usage
 
@@ -28,7 +30,7 @@ jobs:
         version: 1.0.0
         command_options:
           --enable-es6
-          ignores=['node_modules/**/*']
+          --project-ignores=['node_modules/**/*']
       env:
         MINI_APP_ID: ${{ secrets.MINI_APP_ID }}
         MINI_APP_PRIVATE_KEY: ${{ secrets.MINI_APP_PRIVATE_KEY }}
