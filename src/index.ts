@@ -37,7 +37,7 @@ async function run(): Promise<void> {
     
     let robotConfig: any= {};
     if(existsRobotConfig) {
-      robotConfig = require(path.join(sourceDir, '.mini-program-robot.js'));
+      robotConfig = require(path.join(sourceDir, '.mini.program.robot.config.js'));
     } else {
       robotConfig = config;
     }
