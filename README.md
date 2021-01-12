@@ -42,3 +42,20 @@ jobs:
   MINI_APP_ID: ${{ secrets.MINI_APP_ID }}
   MINI_APP_PRIVATE_KEY: ${{ secrets.MINI_APP_PRIVATE_KEY }}
 ```
+
+## Tips:
+> if you want to config which robot to use to pub, you can create a file name `.mini-program-robot.js`, and it's content as follow:
+
+```javascript
+module.exports = {
+  main: 1,
+  master: 1,
+  staging: 2,
+  release: 3,
+  dev: 5,
+  debug: 6,
+  feature: 7,
+  exp: 8,
+  xxxusername: 10
+}
+```
