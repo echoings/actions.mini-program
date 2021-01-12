@@ -1,5 +1,5 @@
-name: "actions.mini-program"
-description: "integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier"
+name: actions.mini-program
+description: integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier
 branding:
   icon: box
   color: green
