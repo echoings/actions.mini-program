@@ -37,6 +37,8 @@ jobs:
 
 ```
 
-3. get your mini program appid and (download private key)[https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html], then set them as github secrect and env values
+3. get your mini program appid and [download private key](https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html), then set them as github secrect and env values
+```yaml
   MINI_APP_ID: ${{ secrets.MINI_APP_ID }}
   MINI_APP_PRIVATE_KEY: ${{ secrets.MINI_APP_PRIVATE_KEY }}
+```
