@@ -4,6 +4,9 @@
 
 A [GitHub Action](https://github.com/features/actions) to integration Mini Program [dev, pub, preview...] with github action, make collaborative development easier, use with [actions.notify](https://github.com/echoings/actions.notify) to notify result to IM is recommended.
 
+## screenshots
+
+![](https://cdn.jsdelivr.net/gh/echoings/un@l/assets/20210112152617.png)
 ## Usage
 
 You can use this action after any other action. Here is an example setup of this action:
