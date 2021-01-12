@@ -9,8 +9,11 @@ async function run(): Promise<void> {
   try {
     const projectType = core.getInput('project_type');
     const actionType = core.getInput('action_type');
+    const subcommand = core.getInput('subcommand');
     const projectPath = core.getInput('project_path');
     const version = core.getInput('version');
+    const remark = core.getInput('remark');
+    
     // const ignores = core.getInput('ignores');
     const options = core.getInput('command_options') || '';
 
@@ -34,7 +37,7 @@ async function run(): Promise<void> {
     
     let robotConfig: any= {};
     if(existsRobotConfig) {
-      robotConfig = require(path.join(sourceDir, 'mini-program-robot.js'));
+      robotConfig = require(path.join(sourceDir, '.mini-program-robot.js'));
     } else {
       robotConfig = config;
     }
@@ -52,13 +55,14 @@ async function run(): Promise<void> {
       // ignores,
       baseArgs: [
         'miniprogram-ci',
+        ...subcommand.split(' '),
         `${actionType}`,
         '--project-type', `${projectType}`,
         '--pp', `${uploadDir}`,
         '--pkp', `${privateKeyDir}`,
         '--appid', `${MINI_APP_ID}`,
         '--uv', `${version}`,
-        '--ud', `'${commits[0].message}'`,
+        '--ud', `'${remark || commits[0].message}'`,
         '-r', `${robot}`,
         ...commandOptions,
       ]

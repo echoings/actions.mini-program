@@ -20,9 +20,17 @@ inputs:
     description: pub version
     required: false
     default: 0.0.1
+  remark: 
+    description: upload version's remark
+    required: false
   # ignores:
   #   description: ignore folder
   #   required: false
+  subcommand:
+    description: 
+      in case void miniprogram-cli upgrade to change it's command structure, can use this as subcommand
+      values are separated with whitespace
+    required: false
   command_options:
     description: compile options # https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html
     required: false
