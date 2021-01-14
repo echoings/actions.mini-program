@@ -80,4 +80,13 @@ export default class Cli{
       ...baseArgs,
     ]);
   }
+
+  // not match any of other command
+  async custom() {
+    const { baseArgs } = this.options;
+    
+    await exec.exec('npx', [
+      ...baseArgs,
+    ]);
+  }
 }
