@@ -13,8 +13,7 @@ async function run(): Promise<void> {
     const projectPath = core.getInput('project_path');
     const version = core.getInput('version');
     const remark = core.getInput('remark');
-    
-    // const ignores = core.getInput('ignores');
+    const robotsAttr = core.getInput('robots');
     const options = core.getInput('command_options') || '';
 
     const { MINI_APP_ID, MINI_APP_PRIVATE_KEY, GITHUB_WORKSPACE: sourceDir = '' } = process.env;
@@ -36,7 +35,17 @@ async function run(): Promise<void> {
     const existsRobotConfig = await fs.pathExists(path.join(sourceDir, '.mini-program-robot.js'))
     
     let robotConfig: any= {};
-    if(existsRobotConfig) {
+
+    if(robotsAttr) {
+      robotsAttr.replace('\n', '').split(' ').forEach(v => {
+        const map = v.split('=');
+        if(map[1]) {
+          robotConfig[map[0]] = map[1];
+        } else {
+          robotConfig[map[0]] = 28;
+        }
+      });
+    } else if(existsRobotConfig) {
       robotConfig = require(path.join(sourceDir, '.mini-program-robot.js'));
     } else {
       robotConfig = config;

@@ -23,11 +23,16 @@ inputs:
   remark: 
     description: upload version's remark
     required: false
-  # ignores:
-  #   description: ignore folder
-  #   required: false
+  robots:
+    description: config which robot to pub, use branch or commit username as key
+    required: false
+    # default:
+      # one line a config
+      # main=1
+      # dev=6
+      # user=28
   subcommand:
-    description: 
+    description:
       in case void miniprogram-cli upgrade to change it's command structure, can use this as subcommand
       values are separated with whitespace
     required: false
