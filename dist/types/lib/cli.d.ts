@@ -7,4 +7,5 @@ export default class Cli {
     pack_npm(): Promise<void>;
     get_dev_source_map(): Promise<void>;
     pack_npm_manually(): Promise<void>;
+    custom(): Promise<void>;
 }
