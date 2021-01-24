@@ -7,11 +7,11 @@ import config from './config';
 
 async function run(): Promise<void> {
   try {
-    const projectType = core.getInput('project_type');
-    const actionType = core.getInput('action_type');
+    const projectType = core.getInput('project_type') || 'miniProgram';
+    const actionType = core.getInput('action_type') || 'preview';
     const subcommand = core.getInput('subcommand');
-    const projectPath = core.getInput('project_path');
-    const version = core.getInput('version');
+    const projectPath = core.getInput('project_path') || './';
+    const version = core.getInput('version') || '1.0.0';
     const remark = core.getInput('remark');
     const robotsAttr = core.getInput('robots');
     const options = core.getInput('command_options') || '';
