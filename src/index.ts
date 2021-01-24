@@ -53,6 +53,7 @@ async function run(): Promise<void> {
 
     const author = github.context.actor;
     const branch = github.context.ref.replace(/refs\/heads\//, '');
+    const pullRuestTitle = github.context.payload.pull_request?.title;
     const robot = robotConfig[branch] || robotConfig[author] || 28;
     const commits = github.context.payload.commits || [{message: `robot ${robot} trigger this pub`}];
 
@@ -71,7 +72,7 @@ async function run(): Promise<void> {
         '--pkp', `${privateKeyDir}`,
         '--appid', `${MINI_APP_ID}`,
         '--uv', `${version}`,
-        '--ud', `'${remark || commits[0].message}'`,
+        '--ud', `'${remark || pullRuestTitle || commits[0].message}'`,
         '-r', `${robot}`,
         ...commandOptions,
       ]
