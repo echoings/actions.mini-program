@@ -7,11 +7,11 @@ import config from './config';
 
 async function run(): Promise<void> {
   try {
-    const projectType = core.getInput('project_type');
-    const actionType = core.getInput('action_type');
+    const projectType = core.getInput('project_type') || 'miniProgram';
+    const actionType = core.getInput('action_type') || 'preview';
     const subcommand = core.getInput('subcommand');
-    const projectPath = core.getInput('project_path');
-    const version = core.getInput('version');
+    const projectPath = core.getInput('project_path') || './';
+    const version = core.getInput('version') || '1.0.0';
     const remark = core.getInput('remark');
     const robotsAttr = core.getInput('robots');
     const options = core.getInput('command_options') || '';
@@ -53,6 +53,7 @@ async function run(): Promise<void> {
 
     const author = github.context.actor;
     const branch = github.context.ref.replace(/refs\/heads\//, '');
+    const pullRuestTitle = github.context.payload.pull_request?.title;
     const robot = robotConfig[branch] || robotConfig[author] || 28;
     const commits = github.context.payload.commits || [{message: `robot ${robot} trigger this pub`}];
 
@@ -71,7 +72,7 @@ async function run(): Promise<void> {
         '--pkp', `${privateKeyDir}`,
         '--appid', `${MINI_APP_ID}`,
         '--uv', `${version}`,
-        '--ud', `'${remark || commits[0].message}'`,
+        '--ud', `'${remark || pullRuestTitle || commits[0].message}'`,
         '-r', `${robot}`,
         ...commandOptions,
       ]
